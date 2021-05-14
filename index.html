@@ -22,6 +22,39 @@
         >
         <button type="submit">Search</button>
       </form>
+      <form id="formCity">
+        <input 
+          id="city" 
+          type="text" 
+          placeholder="City"
+          title="Please Enter a valid City"
+        >
+        <button type="submit">Search</button>
+      </form>
+      <form id="formCord">
+        <input
+          id="lat" 
+          type="text" 
+          placeholder="Latitude"
+          title="Please Enter Latitude"
+        >
+        <input 
+          id="lon" 
+          type="text" 
+          placeholder="Longitude"
+          title="Please Enter Longitude"
+        >
+        <button type="submit">Search</button>
+      </form>
+      <form id="formId">
+        <input 
+          id="id" 
+          type="text" 
+          placeholder="id"
+          title="Please enter a valid city id"
+        >
+        <button type="submit">Search</button>
+      </form>
     </div>
 
     <script src="index.js"></script>
@@ -30,6 +63,13 @@
       const inputZip = document.getElementById('zip')
       const tempDisplay = document.getElementById('temp')
       const weatherDesc = document.getElementById('desc')
+      const formCity = document.getElementById('formCity')
+      const formCord= document.getElementById('formCord')
+      const formId= document.getElementById('formId')
+      const inputCity = document.getElementById('city')
+      const inputId = document.getElementById('id')
+      const inputLat = document.getElementById('lat')
+      const inputLon = document.getElementById('lon')
 
       const units = 'metric'
       const apikey = '467355df4c808dd6134a3b64e9ace282'
@@ -41,6 +81,46 @@
         const zip = inputZip.value
 
         weather.getWeather(zip).then((data) => {
+          tempDisplay.innerHTML = data.main.temp
+          weatherDesc.innerHTML = data.weather[0].description
+        }).catch((err) => {
+          console.log(err.message)
+        })
+      })
+
+      formCity.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        const city = inputCity.value
+
+        weather.getWeatherByCity(city).then((data) => {
+          tempDisplay.innerHTML = data.main.temp
+          weatherDesc.innerHTML = data.weather[0].description
+        }).catch((err) => {
+          console.log(err.message)
+        })
+      })
+
+      formCord.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        const lat = inputLat.value
+        const lon = inputLon.value
+
+        weather.getWeatherByCord(lat, lon).then((data) => {
+          tempDisplay.innerHTML = data.main.temp
+          weatherDesc.innerHTML = data.weather[0].description
+        }).catch((err) => {
+          console.log(err.message)
+        })
+      })
+
+      formId.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        const id = inputId.value
+
+        weather.getWeatherById(id).then((data) => {
           tempDisplay.innerHTML = data.main.temp
           weatherDesc.innerHTML = data.weather[0].description
         }).catch((err) => {
